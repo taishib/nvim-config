@@ -60,3 +60,4 @@ to add to your own config :)
   - [x] playerctl wrapper
   - [ ] nui UI (wip)
 # nvim-config
+# nvim-config
