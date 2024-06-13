@@ -44,6 +44,17 @@ return {
     config = function()
       require("configs.ui.edgy")
     end,
+    keys = {
+      {
+        "<leader>ue",
+        function()
+          require("edgy").toggle()
+        end,
+        desc = "Edgy Toggle",
+      },
+      -- stylua: ignore
+      { "<leader>uE", function() require("edgy").select() end, desc = "Edgy Select Window" },
+    },
   },
   {
     "folke/zen-mode.nvim",
@@ -64,12 +75,91 @@ return {
     config = function()
       require("configs.ui.noice")
     end,
+    keys = {
+      { "<leader>un", "", desc = "+noice" },
+      {
+        "<S-Enter>",
+        function()
+          require("noice").redirect(vim.fn.getcmdline())
+        end,
+        mode = "c",
+        desc = "Redirect Cmdline",
+      },
+      {
+        "<leader>unl",
+        function()
+          require("noice").cmd("last")
+        end,
+        desc = "Noice Last Message",
+      },
+      {
+        "<leader>unh",
+        function()
+          require("noice").cmd("history")
+        end,
+        desc = "Noice History",
+      },
+      {
+        "<leader>una",
+        function()
+          require("noice").cmd("all")
+        end,
+        desc = "Noice All",
+      },
+      {
+        "<leader>und",
+        function()
+          require("noice").cmd("dismiss")
+        end,
+        desc = "Dismiss All",
+      },
+      {
+        "<leader>unt",
+        function()
+          require("noice").cmd("pick")
+        end,
+        desc = "Noice Picker (Telescope/FzfLua)",
+      },
+      {
+        "<c-f>",
+        function()
+          if not require("noice.lsp").scroll(4) then
+            return "<c-f>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Forward",
+        mode = { "i", "n", "s" },
+      },
+      {
+        "<c-b>",
+        function()
+          if not require("noice.lsp").scroll(-4) then
+            return "<c-b>"
+          end
+        end,
+        silent = true,
+        expr = true,
+        desc = "Scroll Backward",
+        mode = { "i", "n", "s" },
+      },
+    },
   },
   {
     "rcarriga/nvim-notify",
     config = function()
       require("configs.ui.notify")
     end,
+    keys = {
+      {
+        "<leader>unn",
+        function()
+          require("notify").dismiss({ silent = true, pending = true })
+        end,
+        desc = "Dismiss All Notifications",
+      },
+    },
   },
   {
     "3rd/image.nvim",
@@ -95,6 +185,7 @@ return {
     config = function()
       require("configs.ui.mini-indentscope")
     end,
+    enabled = false,
   },
   {
     "nyngwang/murmur.lua",
@@ -102,6 +193,46 @@ return {
     config = function()
       require("configs.ui.murmur")
     end,
+    enabled = false,
+  },
+  {
+    "RRethy/vim-illuminate",
+    event = "VeryLazy",
+    opts = {
+      delay = 200,
+      large_file_cutoff = 2000,
+      large_file_overrides = {
+        providers = { "lsp" },
+      },
+    },
+    config = function(_, opts)
+      require("illuminate").configure(opts)
+
+      local function map(key, dir, buffer)
+        vim.keymap.set("n", key, function()
+          require("illuminate")["goto_" .. dir .. "_reference"](false)
+        end, {
+          desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference",
+          buffer = buffer,
+        })
+      end
+
+      map("]]", "next")
+      map("[[", "prev")
+
+      -- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          local buffer = vim.api.nvim_get_current_buf()
+          map("]]", "next", buffer)
+          map("[[", "prev", buffer)
+        end,
+      })
+    end,
+    keys = {
+      { "]]", desc = "Next Reference" },
+      { "[[", desc = "Prev Reference" },
+    },
   },
   -- SIDEBARS --
   {
@@ -124,6 +255,29 @@ return {
     opts = function()
       return require("configs.ui.sidebars").neotree
     end,
+    keys = {
+      { "<leader>fe", "<cmd>Neotree<cr>", desc = "NeoTree" },
+      {
+        "<leader>ge",
+        function()
+          require("neo-tree.command").execute({
+            source = "git_status",
+            toggle = true,
+          })
+        end,
+        desc = "Git Explorer",
+      },
+      {
+        "<leader>be",
+        function()
+          require("neo-tree.command").execute({
+            source = "buffers",
+            toggle = true,
+          })
+        end,
+        desc = "Buffer Explorer",
+      },
+    },
   },
   {
     "stevearc/aerial.nvim",
@@ -147,6 +301,66 @@ return {
     config = function()
       require("configs.editor.trouble")
     end,
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      {
+        "<leader>cs",
+        "<cmd>Trouble symbols toggle focus=false<cr>",
+        desc = "Symbols (Trouble)",
+      },
+      {
+        "<leader>cS",
+        "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+        desc = "LSP references/definitions/... (Trouble)",
+      },
+      {
+        "<leader>xL",
+        "<cmd>Trouble loclist toggle<cr>",
+        desc = "Location List (Trouble)",
+      },
+      {
+        "<leader>xQ",
+        "<cmd>Trouble qflist toggle<cr>",
+        desc = "Quickfix List (Trouble)",
+      },
+      {
+        "[q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").prev({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cprev)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Previous Trouble/Quickfix Item",
+      },
+      {
+        "]q",
+        function()
+          if require("trouble").is_open() then
+            require("trouble").next({ skip_groups = true, jump = true })
+          else
+            local ok, err = pcall(vim.cmd.cnext)
+            if not ok then
+              vim.notify(err, vim.log.levels.ERROR)
+            end
+          end
+        end,
+        desc = "Next Trouble/Quickfix Item",
+      },
+    },
   },
   -- WINDOWS --
   {
@@ -299,11 +513,12 @@ return {
   },
   {
     "willothy/minimus",
-    priority = 100,
     config = function()
-      vim.cmd.colorscheme("minimus")
+      -- vim.cmd.colorscheme("minimus")
     end,
-    event = "UiEnter",
+    event = "VeryLazy",
+    -- priority = 100,
+    -- event = "UiEnter",
     -- dir = "~/projects/lua/minimus/",
   },
   {
@@ -326,4 +541,30 @@ return {
   "folke/tokyonight.nvim",
   "rebelot/kanagawa.nvim",
   "eldritch-theme/eldritch.nvim",
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    event = "UiEnter",
+    config = function()
+      require("configs.ui.catppuccin")
+    end,
+  },
+  {
+    "folke/zen-mode.nvim",
+    dependencies = { "folke/twilight.nvim" },
+    cmd = "ZenMode",
+    opts = {
+      plugins = {
+        gitsigns = true,
+        tmux = true,
+        kitty = { enabled = false, font = "+2" },
+        twilight = { enabled = true },
+        alacritty = {
+          enabled = true,
+          font = "+2", -- font size
+        },
+      },
+    },
+    keys = { { "<leader>uz", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+  },
 }

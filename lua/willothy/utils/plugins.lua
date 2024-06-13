@@ -17,7 +17,7 @@ function M.is_fork(p)
     ["futures.nvim"] = true,
     ["savior.nvim"] = true,
     ["nvim-cokeline"] = true,
-    ["moveline.nvim"] = true,
+    -- ["moveline.nvim"] = true,
     ["veil.nvim"] = true,
     ["wrangler.nvim"] = true,
     ["micro-async.nvim"] = true,

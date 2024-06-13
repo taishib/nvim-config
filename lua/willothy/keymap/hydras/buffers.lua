@@ -1,6 +1,6 @@
 return require("hydra")({
   name = "Buffers",
-  body = "<leader>bh",
+  body = "<localleader>hb",
   short_name = "B󰈮",
   mode = "n",
   hint = [[

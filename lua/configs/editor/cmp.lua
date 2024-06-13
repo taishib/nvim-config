@@ -90,16 +90,19 @@ local opts = {
     },
     { name = "buffer", max_item_count = 4 },
     { name = "path" },
+    { name = "cmp_yanky" },
+    { name = "git" },
   }),
   mapping = {
-    ["<M-k>"] = cmp.mapping(
+    ["<C-p>"] = cmp.mapping(
       cmp.mapping.select_prev_item(cmp_select),
       { "i", "c", "t" }
     ),
-    ["<M-j>"] = cmp.mapping(
+    ["<C-n>"] = cmp.mapping(
       cmp.mapping.select_next_item(cmp_select),
       { "i", "c", "t" }
     ),
+    ["<CR>"] = cmp.mapping.confirm({ select = true }),
     ["<M-Up>"] = cmp.mapping(cmp.mapping.select_prev_item(cmp.select)),
     ["<M-Down>"] = cmp.mapping(cmp.mapping.select_next_item(cmp.select)),
     ["<C-PageUp>"] = cmp.mapping(cmp.mapping.scroll_docs(-5), { "i", "c" }),
@@ -118,20 +121,20 @@ local opts = {
         suggestion.dismiss()
       end
     end, { "i", "c" }),
-    ["<C-n>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      else
-        fallback()
-      end
-    end),
-    ["<C-p>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      else
-        fallback()
-      end
-    end),
+    -- ["<C-n>"] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_next_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end),
+    -- ["<C-p>"] = cmp.mapping(function(fallback)
+    --   if cmp.visible() then
+    --     cmp.select_prev_item()
+    --   else
+    --     fallback()
+    --   end
+    -- end),
     ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() and not vim.snippet.active({ direction = -1 }) then
         cmp.select_prev_item()

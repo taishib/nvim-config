@@ -15,7 +15,7 @@ local neogit = setmetatable({}, {
 local wk = require("which-key")
 
 wk.register({
-  name = "git",
+  name = "+git",
   c = neogit.commit,
   b = neogit.branch,
   l = neogit.log,

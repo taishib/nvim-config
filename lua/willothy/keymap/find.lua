@@ -6,7 +6,7 @@ local telescope = willothy.fn.telescope
 local wk = require("which-key")
 
 wk.register({
-  name = "find",
+  name = "+find",
   f = {
     function()
       require("telescope").extensions.frecency.frecency({
@@ -36,5 +36,9 @@ wk.register({
   P = {
     telescope.builtin,
     "telescope pickers",
+  },
+  y = {
+    telescope.yank_history,
+    "yank history",
   },
 }, { mode = modes.non_editing, prefix = "<leader>f" })

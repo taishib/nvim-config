@@ -4,7 +4,7 @@ local modes = keymap.modes
 local wk = require("which-key")
 
 wk.register({
-  name = "projects",
+  name = "+projects",
   f = {
     function()
       willothy.fs.browse("~/projects/")

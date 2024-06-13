@@ -55,6 +55,7 @@ require("which-key").setup({
   },
   key_labels = {
     ["<leader>"] = "",
+    ["<localleader>"] = "",
     ["<space>"] = "SPC",
     ["<cr>"] = "RET",
     ["<tab>"] = "TAB",
@@ -92,3 +93,16 @@ require("which-key").setup({
   sort_by_description = true,
   ignore_missing = false,
 })
+
+local defaults = {
+  mode = { "n", "v" },
+  ["<leader><tab>"] = { name = "+tabs" },
+  ["<leader>q"] = { name = "+quit/session" },
+  ["<leader>s"] = { name = "+search" },
+  ["<leader>u"] = { name = "+ui" },
+  ["<leader>x"] = { name = "+diagnostics/quickfix" },
+  ["<localleader>h"] = { name = "+hydras" },
+}
+
+local wk = require("which-key")
+wk.register(defaults)

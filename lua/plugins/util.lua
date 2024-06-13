@@ -133,4 +133,79 @@ return {
     config = true,
     event = "VeryLazy",
   },
+  {
+    "dstein64/vim-startuptime",
+    cmd = "StartupTime",
+    config = function()
+      vim.g.startuptime_tries = 10
+    end,
+  },
+  {
+    "monaqa/dial.nvim",
+    keys = {
+      { "<C-a>", "<Plug>(dial-increment)", mode = { "n", "x" } },
+      { "g<C-a>", "g<Plug>(dial-increment)", mode = { "x" } },
+      { "<C-x>", "<Plug>(dial-decrement)", mode = { "n", "x" } },
+      { "g<C-x>", "g<Plug>(dial-decrement)", mode = { "x" } },
+    },
+    config = function()
+      require("configs.editor.dial")
+    end,
+  },
+  {
+    "danymat/neogen",
+    cmd = "Neogen",
+    keys = {
+      {
+        "<leader>cN",
+        function()
+          require("neogen").generate()
+        end,
+        desc = "Generate Annotations (Neogen)",
+      },
+    },
+    opts = function(_, opts)
+      if opts.snippet_engine ~= nil then
+        return
+      end
+
+      local map = {
+        ["LuaSnip"] = "luasnip",
+        ["nvim-snippy"] = "snippy",
+        ["vim-vsnip"] = "vsnip",
+      }
+
+      for plugin, engine in pairs(map) do
+        if LazyVim.has(plugin) then
+          opts.snippet_engine = engine
+          return
+        end
+      end
+
+      if vim.snippet then
+        opts.snippet_engine = "nvim"
+      end
+    end,
+  },
+  {
+    "Wansmer/treesj",
+    keys = {
+      { "J", "<cmd>TSJToggle<cr>", desc = "Join Toggle" },
+    },
+    opts = { use_default_keymaps = false, max_join_length = 150 },
+  },
+  {
+    "2kabhishek/nerdy.nvim",
+    cmd = "Nerdy",
+    keys = {
+      { "<leader>ui", "<cmd>Nerdy<cr>", desc = "Pick Icon" },
+    },
+  },
+  {
+    "max397574/better-escape.nvim",
+    event = "InsertEnter",
+    config = function()
+      require("better_escape").setup()
+    end,
+  },
 }

@@ -1,14 +1,14 @@
 local set = vim.keymap.set
 
-set("n", "<leader>bh", function() -- buffers
+set("n", "<localleader>hb", function() -- buffers
   require("willothy.keymap.hydras.buffers"):activate()
-end, { desc = "hydra" })
+end, { desc = "buffers" })
 
-set({ "n", "x" }, "<leader>gh", function() -- git
+set({ "n", "x" }, "<localleader>hg", function() -- git
   require("willothy.keymap.hydras.git"):activate()
-end, { desc = "hydra" })
+end, { desc = "git" })
 
-set({ "n", "x" }, "<leader>o", function() -- options
+set({ "n", "x" }, "<localleader>ho", function() -- options
   require("willothy.keymap.hydras.git"):activate()
 end, { desc = "options" })
 
@@ -16,10 +16,14 @@ set({ "n", "x" }, "gs", function() -- swap
   require("willothy.keymap.hydras.swap"):activate()
 end, { desc = "swap" })
 
-set("n", "<leader>vt", function() -- telescope
+set("n", "<localleader>ht", function() -- telescope
   require("willothy.keymap.hydras.telescope"):activate()
 end, { desc = "telescope" })
 
 set("n", "<C-w>w", function() -- telescope
   require("willothy.keymap.hydras.windows"):activate()
 end, { desc = "hydra" })
+
+-- set("n", "<localleader>hy", function() -- telescope
+--   require("willothy.keymap.hydras.yanky"):activate()
+-- end, { desc = "yanky" })

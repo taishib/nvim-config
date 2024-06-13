@@ -8,7 +8,7 @@ vim.keymap.set("t", "<Esc>", vim.cmd.stopinsert, {
 })
 
 wk.register({
-  ["<S-Enter>"] = {
+  ["<C-t>"] = {
     function()
       willothy.terminal.main:toggle()
     end,

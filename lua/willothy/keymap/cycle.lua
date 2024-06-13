@@ -80,8 +80,8 @@ local next = {
   end):with_desc("harpoon mark"),
 }
 
-wk.register(previous, { mode = modes.normal, prefix = "<leader>h" })
+-- wk.register(previous, { mode = modes.normal, prefix = "<leader>h" })
 wk.register(previous, { mode = modes.normal, prefix = "[" })
 
-wk.register(next, { mode = modes.normal, prefix = "<leader>l" })
+-- wk.register(next, { mode = modes.normal, prefix = "<leader>l" })
 wk.register(next, { mode = modes.normal, prefix = "]" })

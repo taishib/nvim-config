@@ -5,7 +5,7 @@ local bind, modes = keymap.bind, keymap.modes
 local wk = require("which-key")
 
 wk.register({
-  name = "buffer",
+  name = "+buffer",
   r = {
     function()
       require("reach").buffers({
@@ -66,3 +66,11 @@ wk.register({
     "prev",
   },
 }, { mode = modes.non_editing, prefix = "<leader>b" })
+
+local map = vim.keymap.set
+
+map("n", "<S-h>", "<Plug>(cokeline-focus-prev)", { silent = true })
+map("n", "<S-l>", "<Plug>(cokeline-focus-next)", { silent = true })
+map("n", "<S-q>", function()
+  require("bufdelete").bufdelete(vim.v.count)
+end)

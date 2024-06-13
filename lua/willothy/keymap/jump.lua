@@ -5,7 +5,7 @@ local bind, modes = keymap.bind, keymap.modes
 local wk = require("which-key")
 
 wk.register({
-  name = "jump",
+  name = "+jump",
   d = {
     function()
       require("configs.navigation.portal").diagnostics({

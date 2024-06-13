@@ -32,6 +32,16 @@ return {
     "nvim-pack/nvim-spectre",
     opts = {
       is_block_ui_break = true,
+      open_cmd = "noswapfile vnew",
+    },
+    keys = {
+      {
+        "<leader>sr",
+        function()
+          require("spectre").open()
+        end,
+        desc = "Replace in Files (Spectre)",
+      },
     },
   },
   {
@@ -39,6 +49,14 @@ return {
     -- branch = "oxi",
     event = "VeryLazy",
     build = "make build",
+    enabled = false,
+  },
+  {
+    "echasnovski/mini.move",
+    event = "VeryLazy",
+    config = function()
+      require("mini.move").setup()
+    end,
   },
   {
     "gbprod/substitute.nvim",
@@ -55,9 +73,43 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       -- "IndianBoy42/tree-sitter-just",
       "chrisgrieser/nvim-various-textobjs",
+      "windwp/nvim-ts-autotag", -- Automatically add closing tags for HTML and JSX
     },
     config = function()
       require("configs.editor.treesitter")
+    end,
+  },
+  {
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "BufReadPost",
+    opts = { mode = "cursor", max_lines = 3 },
+    keys = {
+      {
+        "<leader>ut",
+        function()
+          local tsc = require("treesitter-context")
+          tsc.toggle()
+        end,
+        desc = "Toggle Treesitter Context",
+      },
+    },
+  },
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+    keys = {
+      {
+        "<leader>cp",
+        ft = "markdown",
+        "<cmd>MarkdownPreviewToggle<cr>",
+        desc = "Markdown Preview",
+      },
+    },
+    config = function()
+      vim.cmd([[do FileType]])
     end,
   },
   {
@@ -78,6 +130,38 @@ return {
     "folke/todo-comments.nvim",
     config = true,
     event = "VeryLazy",
+    keys = {
+      {
+        "]t",
+        function()
+          require("todo-comments").jump_next()
+        end,
+        desc = "Next Todo Comment",
+      },
+      {
+        "[t",
+        function()
+          require("todo-comments").jump_prev()
+        end,
+        desc = "Previous Todo Comment",
+      },
+      {
+        "<leader>xt",
+        "<cmd>Trouble todo toggle<cr>",
+        desc = "Todo (Trouble)",
+      },
+      {
+        "<leader>xT",
+        "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>",
+        desc = "Todo/Fix/Fixme (Trouble)",
+      },
+      { "<leader>ft", "<cmd>TodoTelescope<cr>", desc = "Todo" },
+      {
+        "<leader>fT",
+        "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>",
+        desc = "Todo/Fix/Fixme",
+      },
+    },
   },
   {
     "vhyrro/luarocks.nvim",
@@ -161,6 +245,98 @@ return {
         build = "make",
       },
     },
+    keys = {
+      {
+        "<leader><space>",
+        function()
+          local telescope = require("telescope")
+
+          local function telescope_buffer_dir()
+            return vim.fn.expand("%:p:h")
+          end
+
+          telescope.extensions.file_browser.file_browser({
+            path = "%:p:h",
+            cwd = telescope_buffer_dir(),
+            respect_gitignore = false,
+            hidden = true,
+            grouped = true,
+            previewer = false,
+            initial_mode = "normal",
+            layout_config = { height = 40 },
+          })
+        end,
+        desc = "Open File Browser with the path of the current buffer",
+      },
+      {
+        "<leader>fb",
+        "<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
+        desc = "Switch Buffer",
+      },
+      {
+        "<leader>f:",
+        "<cmd>Telescope command_history<cr>",
+        desc = "Command History",
+      },
+      -- search
+      { '<leader>s"', "<cmd>Telescope registers<cr>", desc = "Registers" },
+      {
+        "<leader>sa",
+        "<cmd>Telescope autocommands<cr>",
+        desc = "Auto Commands",
+      },
+      {
+        "<leader>sb",
+        "<cmd>Telescope current_buffer_fuzzy_find<cr>",
+        desc = "Buffer",
+      },
+      {
+        "<leader>sc",
+        "<cmd>Telescope command_history<cr>",
+        desc = "Command History",
+      },
+      { "<leader>sC", "<cmd>Telescope commands<cr>", desc = "Commands" },
+      {
+        "<leader>sd",
+        "<cmd>Telescope diagnostics bufnr=0<cr>",
+        desc = "Document Diagnostics",
+      },
+      {
+        "<leader>sD",
+        "<cmd>Telescope diagnostics<cr>",
+        desc = "Workspace Diagnostics",
+      },
+      { "<leader>sM", "<cmd>Telescope man_pages<cr>", desc = "Man Pages" },
+      { "<leader>sm", "<cmd>Telescope marks<cr>", desc = "Jump to Mark" },
+      {
+        "<leader>uc",
+        "<cmd>Telescope colorscheme<cr>",
+        desc = "Change Colorscheme",
+      },
+      -- Show help actions with telescope
+      {
+        "<leader>ad",
+        function()
+          local actions = require("CopilotChat.actions")
+          local help = actions.help_actions()
+          require("CopilotChat.integrations.telescope").pick(help)
+        end,
+        desc = "Diagnostic Help (CopilotChat)",
+        mode = { "n", "v" },
+      },
+      -- Show prompts actions with telescope
+      {
+        "<leader>ap",
+        function()
+          local actions = require("CopilotChat.actions")
+          require("CopilotChat.integrations.telescope").pick(
+            actions.prompt_actions()
+          )
+        end,
+        desc = "Prompt Actions (CopilotChat)",
+        mode = { "n", "v" },
+      },
+    },
   },
   {
     "stevearc/oil.nvim",
@@ -179,6 +355,22 @@ return {
       require("configs.editor.mini-files")
     end,
     cmd = "MiniFiles",
+    keys = {
+      {
+        "<leader>fm",
+        function()
+          require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+        end,
+        desc = "Open mini.files (Directory of Current File)",
+      },
+      {
+        "<leader>fM",
+        function()
+          require("mini.files").open(vim.uv.cwd(), true)
+        end,
+        desc = "Open mini.files (cwd)",
+      },
+    },
   },
   {
     "echasnovski/mini.visits",
@@ -299,6 +491,13 @@ return {
   {
     "chrisgrieser/nvim-spider",
     config = true,
+  },
+  {
+    "haya14busa/vim-edgemotion",
+    keys = {
+      { "ej", "<Plug>(edgemotion-j)", mode = "n" },
+      { "ek", "<Plug>(edgemotion-k)", mode = "n" },
+    },
   },
   {
     "toppair/reach.nvim",

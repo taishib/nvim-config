@@ -12,7 +12,16 @@ local opts = {
     css = { { "prettier" } },
     scss = { { "prettier" } },
     html = { { "prettier" } },
-    markdown = { { "markdownlint", "prettier" } },
+    ["markdown"] = {
+      { "prettierd", "prettier" },
+      "markdownlint",
+      "markdown-toc",
+    },
+    ["markdown.mdx"] = {
+      { "prettierd", "prettier" },
+      "markdownlint",
+      "markdown-toc",
+    },
     json = { { "jq", "prettier" } },
     proto = { { "buf", "protolint" } },
     nasm = { { "asmfmt" } },

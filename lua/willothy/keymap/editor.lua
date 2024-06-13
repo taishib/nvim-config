@@ -231,48 +231,46 @@ wk.register({
       footer_pos = "center",
     })
   end):with_desc("harpoon: marks"),
-  ["<C-c>"] = bind(function()
-    local harpoon = require("harpoon")
-    local list = harpoon:list("terminals")
-    local width_ratio = 0.45
-    if vim.o.columns > 130 then
-      width_ratio = 0.35
-    elseif vim.o.columns < 100 then
-      width_ratio = 0.55
-    end
-    harpoon.ui:toggle_quick_menu(list, {
-      ui_width_ratio = width_ratio,
-      border = "solid",
-      title_pos = "center",
-      footer_pos = "center",
-    })
-  end):with_desc("harpoon: commands"),
-  ["<C-t>"] = bind(function()
-    local harpoon = require("harpoon")
-    local list = harpoon:list("wezterm")
-    local width_ratio = 0.45
-    if vim.o.columns > 130 then
-      width_ratio = 0.35
-    elseif vim.o.columns < 100 then
-      width_ratio = 0.55
-    end
-    harpoon.ui:toggle_quick_menu(list, {
-      ui_width_ratio = width_ratio,
-      border = "solid",
-      title_pos = "center",
-      footer_pos = "center",
-    })
-  end):with_desc("harpoon: tmux sessions"),
-  ["<C-a>"] = bind(function()
-    local harpoon = require("harpoon")
-    local list = harpoon:list("files")
-
-    if list:length() == list:append():length() then
-      list:remove()
-    end
-  end):with_desc("harpoon: toggle file"),
-  ["<M-k>"] = bind("moveline", "up"):with_desc("move: up"),
-  ["<M-j>"] = bind("moveline", "down"):with_desc("move: down"),
+  -- ["<C-c>"] = bind(function()
+  --   local harpoon = require("harpoon")
+  --   local list = harpoon:list("terminals")
+  --   local width_ratio = 0.45
+  --   if vim.o.columns > 130 then
+  --     width_ratio = 0.35
+  --   elseif vim.o.columns < 100 then
+  --     width_ratio = 0.55
+  --   end
+  --   harpoon.ui:toggle_quick_menu(list, {
+  --     ui_width_ratio = width_ratio,
+  --     border = "solid",
+  --     title_pos = "center",
+  --     footer_pos = "center",
+  --   })
+  -- end):with_desc("harpoon: commands"),
+  -- ["<C-t>"] = bind(function()
+  --   local harpoon = require("harpoon")
+  --   local list = harpoon:list("wezterm")
+  --   local width_ratio = 0.45
+  --   if vim.o.columns > 130 then
+  --     width_ratio = 0.35
+  --   elseif vim.o.columns < 100 then
+  --     width_ratio = 0.55
+  --   end
+  --   harpoon.ui:toggle_quick_menu(list, {
+  --     ui_width_ratio = width_ratio,
+  --     border = "solid",
+  --     title_pos = "center",
+  --     footer_pos = "center",
+  --   })
+  -- end):with_desc("harpoon: tmux sessions"),
+  -- ["<C-a>"] = bind(function()
+  --   local harpoon = require("harpoon")
+  --   local list = harpoon:list("files")
+  --
+  --   if list:length() == list:append():length() then
+  --     list:remove()
+  --   end
+  -- end):with_desc("harpoon: toggle file"),
   ["<C-s>"] = bind(function()
     vim.cmd.write()
   end):with_desc("save"),
@@ -299,7 +297,7 @@ end, { silent = true, noremap = true, desc = "macro: stop" })
 -- end, { silent = true, noremap = true, desc = "macro: cycle prev" })
 
 wk.register({
-  name = "marks",
+  name = "+marks",
   d = bind("marks", "delete"):with_desc("delete mark"),
   m = bind("reach", "marks"),
   h = bind(function()
@@ -351,8 +349,6 @@ wk.register({
 }, { mode = modes.normal, preset = true })
 
 wk.register({
-  ["<M-k>"] = bind("moveline", "block_up"):with_desc("move: up"),
-  ["<M-j>"] = bind("moveline", "block_down"):with_desc("move: down"),
   ["<Tab>"] = bind(function()
     if vim.bo.modifiable then
       require("stay-in-place").shift_right_visual()
@@ -381,6 +377,14 @@ wk.register({
   P = {
     "<Plug>(YankyPutBefore)",
     fmt("put"),
+  },
+  ["]p"] = {
+    "<Plug>(YankyPutIndentAfterLinewise)",
+    fmt("put indent after"),
+  },
+  ["[p"] = {
+    "<Plug>(YankyPutIndentBeforeLinewise)",
+    fmt("put indent before"),
   },
   gp = {
     "<Plug>(YankyGPutAfter)",

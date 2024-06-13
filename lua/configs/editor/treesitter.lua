@@ -21,6 +21,7 @@ require("nvim-treesitter.configs").setup({
     "git_config",
     "jsonc",
     "json",
+    "json5",
   },
   sync_install = false,
   auto_install = true,
@@ -35,6 +36,15 @@ require("nvim-treesitter.configs").setup({
   },
   indent = {
     enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "+",
+      node_incremental = "+",
+      scope_incremental = false,
+      node_decremental = "-",
+    },
   },
   textobjects = {
     select = {

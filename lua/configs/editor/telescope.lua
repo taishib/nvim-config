@@ -1,3 +1,4 @@
+local actions = require("telescope.actions")
 local telescope = require("telescope")
 
 local schedule_if_buf_valid = function(buf, fn)
@@ -81,7 +82,11 @@ end
 local trouble = require("trouble.sources.telescope")
 
 telescope.setup({
-  pickers = {},
+  pickers = {
+    colorscheme = {
+      enable_preview = true,
+    },
+  },
   defaults = {
     -- initial_mode = "normal",
     history = {
@@ -107,6 +112,7 @@ telescope.setup({
           opts = { expr = true },
         },
         ["<C-t>"] = trouble.open,
+        ["<esc>"] = actions.close,
       },
       n = {
         ["<MouseMove>"] = {
@@ -188,9 +194,10 @@ telescope.setup({
 for _, ext in ipairs({
   "fzf",
   "frecency",
+  "refactoring",
   -- "smart_history",
   -- "neoclip",
-  -- "file_browser",
+  "file_browser",
   -- "projects",
   -- "noice",
   -- "macros",

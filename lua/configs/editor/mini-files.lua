@@ -2,10 +2,10 @@ local files = require("mini.files")
 
 files.setup({
   windows = {
-    preview = false,
-    width_focus = 25,
+    preview = true,
+    width_focus = 30,
     width_nofocus = 25,
-    width_preview = 25,
+    width_preview = 30,
     height_focus = 20,
     border = "solid",
     max_number = 3,

@@ -8,7 +8,7 @@ local telescope = willothy.fn.telescope
 local wk = require("which-key")
 
 wk.register({
-  name = "view",
+  name = "+view",
   q = bind("trouble", "open", "quickfix"):with_desc("trouble: quickfix"),
   l = bind("trouble", "open", "loclist"):with_desc("trouble: loclist"),
   d = bind("dapui", "toggle"):with_desc("dap-ui"),

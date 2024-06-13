@@ -163,6 +163,11 @@ local opts = {
     --     height = 0.2,
     --   },
     -- }),
+    {
+      ft = "copilot-chat",
+      title = "Copilot Chat",
+      size = { width = 50 },
+    },
   },
   left = {
     sidebar:extend({
@@ -217,47 +222,47 @@ local opts = {
         require("neotest").summary.open()
       end,
     }),
-    sidebar:extend({
-      title = "Files",
-      ft = "neo-tree",
-      filter = function(buf, win)
-        return vim.b[buf].neo_tree_source == "filesystem" and not is_float(win)
-      end,
-      open = function()
-        vim.cmd.Neotree("filesystem")
-      end,
-    }),
-    sidebar:extend({
-      title = "Diagnostics",
-      ft = "neo-tree",
-      filter = function(buf, win)
-        return vim.b[buf].neo_tree_source == "diagnostics"
-          and not is_float(win)
-      end,
-      open = function()
-        vim.cmd.Neotree("diagnostics")
-      end,
-    }),
-    sidebar:extend({
-      title = "Git",
-      ft = "neo-tree",
-      filter = function(buf, win)
-        return vim.b[buf].neo_tree_source == "git_status" and not is_float(win)
-      end,
-      open = function()
-        vim.cmd.Neotree("git_status")
-      end,
-    }),
-    sidebar:extend({
-      title = "Buffers",
-      ft = "neo-tree",
-      filter = function(buf, win)
-        return vim.b[buf].neo_tree_source == "buffers" and not is_float(win)
-      end,
-      open = function()
-        vim.cmd.Neotree("buffers")
-      end,
-    }),
+    -- sidebar:extend({
+    --   title = "Files",
+    --   ft = "neo-tree",
+    --   filter = function(buf, win)
+    --     return vim.b[buf].neo_tree_source == "filesystem" and not is_float(win)
+    --   end,
+    --   open = function()
+    --     vim.cmd.Neotree("filesystem")
+    --   end,
+    -- }),
+    -- sidebar:extend({
+    --   title = "Diagnostics",
+    --   ft = "neo-tree",
+    --   filter = function(buf, win)
+    --     return vim.b[buf].neo_tree_source == "diagnostics"
+    --       and not is_float(win)
+    --   end,
+    --   open = function()
+    --     vim.cmd.Neotree("diagnostics")
+    --   end,
+    -- }),
+    -- sidebar:extend({
+    --   title = "Git",
+    --   ft = "neo-tree",
+    --   filter = function(buf, win)
+    --     return vim.b[buf].neo_tree_source == "git_status" and not is_float(win)
+    --   end,
+    --   open = function()
+    --     vim.cmd.Neotree("git_status")
+    --   end,
+    -- }),
+    -- sidebar:extend({
+    --   title = "Buffers",
+    --   ft = "neo-tree",
+    --   filter = function(buf, win)
+    --     return vim.b[buf].neo_tree_source == "buffers" and not is_float(win)
+    --   end,
+    --   open = function()
+    --     vim.cmd.Neotree("buffers")
+    --   end,
+    -- }),
     sidebar:extend({
       ft = "dapui_watches",
       wo = { winbar = " Watches" },
@@ -287,6 +292,49 @@ local opts = {
         require("dapui").open()
       end,
     }),
+    {
+      title = "Neo-Tree",
+      ft = "neo-tree",
+      filter = function(buf)
+        return vim.b[buf].neo_tree_source == "filesystem"
+      end,
+      pinned = true,
+      open = function()
+        require("neo-tree.command").execute({ toggle = true })
+      end,
+      size = { height = 0.5 },
+    },
+    { title = "Neotest Summary", ft = "neotest-summary" },
+    {
+      title = "Neo-Tree Git",
+      ft = "neo-tree",
+      filter = function(buf)
+        return vim.b[buf].neo_tree_source == "git_status"
+      end,
+      pinned = true,
+      open = "Neotree position=right git_status",
+    },
+    {
+      title = "Neo-Tree Buffers",
+      ft = "neo-tree",
+      filter = function(buf)
+        return vim.b[buf].neo_tree_source == "buffers"
+      end,
+      pinned = true,
+      open = "Neotree position=top buffers",
+    },
+    {
+      title = "Diagnostics",
+      ft = "neo-tree",
+      filter = function(buf, win)
+        return vim.b[buf].neo_tree_source == "diagnostics"
+          and not is_float(win)
+      end,
+      open = function()
+        vim.cmd.Neotree("diagnostics")
+      end,
+    },
+    "neo-tree",
   },
   bottom = {
     terminal:extend({

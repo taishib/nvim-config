@@ -19,4 +19,9 @@ require("neotest").setup({
     virtual_text = true,
     signs = true,
   },
+  quickfix = {
+    open = function()
+      require("trouble").open({ mode = "quickfix", focus = false })
+    end,
+  },
 })
