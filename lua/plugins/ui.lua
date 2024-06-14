@@ -58,13 +58,25 @@ return {
   },
   {
     "folke/zen-mode.nvim",
+    dependencies = { "folke/twilight.nvim" },
     opts = {
+      plugins = {
+        gitsigns = true,
+        tmux = true,
+        kitty = { enabled = false, font = "+2" },
+        twilight = { enabled = true },
+        alacritty = {
+          enabled = true,
+          font = "+2", -- font size
+        },
+      },
       on_open = function(win)
         vim.wo[win].fillchars = vim.go.fillchars
         vim.wo[win].winbar = "%{%v:lua.dropbar.get_dropbar_str()%}"
       end,
     },
     cmd = "ZenMode",
+    keys = { { "<leader>uz", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
   },
   {
     "folke/noice.nvim",
@@ -172,6 +184,13 @@ return {
     end,
   },
   -- SCOPE / CURSORWORD --
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre" },
+    config = function()
+      require("configs.ui.hlchunk")
+    end,
+  },
   {
     "echasnovski/mini.indentscope",
     dependencies = {
@@ -539,32 +558,60 @@ return {
   },
   "loganswartz/polychrome.nvim",
   "folke/tokyonight.nvim",
-  "rebelot/kanagawa.nvim",
   "eldritch-theme/eldritch.nvim",
   {
     "catppuccin/nvim",
     name = "catppuccin",
-    event = "UiEnter",
+    event = "VeryLazy",
     config = function()
       require("configs.ui.catppuccin")
     end,
   },
   {
-    "folke/zen-mode.nvim",
-    dependencies = { "folke/twilight.nvim" },
-    cmd = "ZenMode",
+    "EdenEast/nightfox.nvim",
+    event = "UiEnter",
+    config = function()
+      require("configs.ui.nightfox")
+    end,
+  },
+  {
+    "rebelot/kanagawa.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("configs.ui.kanagawa")
+    end,
+  },
+  {
+    "projekt0n/github-nvim-theme",
+    event = "VeryLazy",
+    config = function()
+      require("configs.ui.github")
+    end,
+  },
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
     opts = {
-      plugins = {
-        gitsigns = true,
-        tmux = true,
-        kitty = { enabled = false, font = "+2" },
-        twilight = { enabled = true },
-        alacritty = {
-          enabled = true,
-          font = "+2", -- font size
-        },
+      styles = {
+        transparency = true,
+      },
+      highlight_groups = {
+        TelescopeBorder = { fg = "highlight_high", bg = "none" },
+        TelescopeNormal = { bg = "none" },
+        TelescopePromptNormal = { bg = "base" },
+        TelescopeResultsNormal = { fg = "subtle", bg = "none" },
+        TelescopeSelection = { fg = "text", bg = "base" },
+        TelescopeSelectionCaret = { fg = "rose", bg = "rose" },
       },
     },
-    keys = { { "<leader>uz", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+    event = "VeryLazy",
+  },
+  {
+    'sainnhe/gruvbox-material',
+    event = "VeryLazy",
+    config = function()
+      vim.g.gruvbox_material_enable_italic = true
+      vim.g.gruvbox_material_transparent_background = 2
+    end
   },
 }

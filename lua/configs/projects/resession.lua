@@ -456,3 +456,14 @@ vim.api.nvim_create_autocmd("QuitPre", {
     end
   end,
 })
+
+local resession = require("resession")
+-- Resession does NOTHING automagically, so we have to set up some keymaps
+vim.keymap.set("n", "<leader>qs", resession.save, { desc = "save session" })
+vim.keymap.set("n", "<leader>ql", resession.load, { desc = "load session" })
+vim.keymap.set(
+  "n",
+  "<leader>qd",
+  resession.delete,
+  { desc = "delete session" }
+)

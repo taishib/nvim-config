@@ -64,7 +64,13 @@ M.xplr = Terminal:extend({
 M.yazi = Terminal:extend({
   display_name = "yazi",
   cmd = "yazi",
-  direction = "vertical",
+  direction = "float",
+})
+
+M.btm = Terminal:extend({
+  display_name = "btm",
+  cmd = "btm",
+  direction = "float",
 })
 
 M.py = Terminal:extend({

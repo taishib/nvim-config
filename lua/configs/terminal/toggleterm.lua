@@ -1,5 +1,5 @@
 require("toggleterm").setup({
-  start_in_insert = false,
+  start_in_insert = true,
   close_on_exit = true,
   shade_terminals = false,
   auto_scroll = false,

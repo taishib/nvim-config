@@ -75,6 +75,20 @@ return {
     end,
   },
   {
+    "bennypowers/nvim-regexplainer",
+    config = function()
+      require("regexplainer").setup({
+        mappings = {
+          toggle = "gR",
+        },
+      })
+    end,
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "MunifTanjim/nui.nvim",
+    },
+  },
+  {
     "tzachar/highlight-undo.nvim",
     config = true,
     event = "VeryLazy",

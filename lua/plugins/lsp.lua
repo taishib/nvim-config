@@ -4,7 +4,7 @@ return {
     "ThePrimeagen/refactoring.nvim",
     config = true,
     cmd = "Refactor",
-    ksys = {
+    keys = {
       { "<leader>r", "", desc = "+refactor", mode = { "n", "v" } },
       {
         "<leader>rs",
@@ -89,6 +89,15 @@ return {
         mode = "v",
         desc = "Debug Print Variable",
       },
+    },
+  },
+  {
+    "mangelozzi/nvim-rgflow.lua",
+    config = function()
+      require("configs.editor.rgflow")
+    end,
+    keys = {
+      { "<leader>r", "", desc = "+refactor/replace", mode = { "n", "v" } },
     },
   },
   -- {
@@ -291,6 +300,11 @@ return {
     config = true,
     event = "LspAttach",
   },
+  {
+    "pmizio/typescript-tools.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+    opts = {},
+  },
   -- DIAGNOSTICS & FORMATTING --
   {
     "nvimtools/none-ls.nvim",
@@ -447,6 +461,19 @@ return {
     "kylechui/nvim-surround",
     config = true,
     event = "InsertEnter",
+  },
+  {
+    "roobert/surround-ui.nvim",
+    event = "InsertEnter",
+    dependencies = {
+      "kylechui/nvim-surround",
+      "folke/which-key.nvim",
+    },
+    config = function()
+      require("surround-ui").setup({
+        root_key = "S",
+      })
+    end,
   },
   -- DEBUGGING --
   {

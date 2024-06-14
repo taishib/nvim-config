@@ -439,3 +439,17 @@ wk.register({
   --   "which_key_ignore",
   -- },
 }, { mode = modes.command })
+
+vim.keymap.set("n", "gx", function()
+  -- select URL
+  require("various-textobjs").url()
+
+  -- plugin only switches to visual mode when textobj found
+  local foundURL = vim.fn.mode():find("v")
+  if not foundURL then return end
+
+  -- retrieve URL with the z-register as intermediary
+  vim.cmd.normal { '"zy', bang = true }
+  local url = vim.fn.getreg("z")
+  vim.ui.open(url) -- requires nvim 0.10
+end, { desc = "URL Opener" })

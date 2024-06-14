@@ -8,8 +8,8 @@ return {
   },
   {
     -- "anuvyklack/hydra.nvim" -- original author
-    -- "nvimtools/hydra.nvim", -- active fork
-    "willothy/hydra.nvim",
+    "nvimtools/hydra.nvim", -- active fork
+    -- "willothy/hydra.nvim",
     -- dir = "~/projects/lua/hydra.nvim/",
   },
   -- COMMANDS --
@@ -20,11 +20,26 @@ return {
     end,
     cmd = "Norm",
   },
+  {
+    "mrjones2014/legendary.nvim",
+    cmd = "Legendary",
+    config = function()
+      require("configs.editor.legendary")
+    end,
+  },
   -- EDITING --
   {
     "numToStr/Comment.nvim",
+    dependencies = "JoosepAlviste/nvim-ts-context-commentstring",
     config = function()
       require("configs.editor.comment")
+    end,
+    event = "VeryLazy",
+  },
+  {
+    "LudoPinelli/comment-box.nvim",
+    config = function()
+      require("configs.editor.comment-box")
     end,
     event = "VeryLazy",
   },
@@ -33,15 +48,6 @@ return {
     opts = {
       is_block_ui_break = true,
       open_cmd = "noswapfile vnew",
-    },
-    keys = {
-      {
-        "<leader>sr",
-        function()
-          require("spectre").open()
-        end,
-        desc = "Replace in Files (Spectre)",
-      },
     },
   },
   {
@@ -64,6 +70,36 @@ return {
       yank_substituted_text = true,
     },
     event = "VeryLazy",
+    keys = {
+      { "U", "<cmd>lua require('substitute').operator()<cr>", mode = "n" },
+      { "U", "<cmd>lua require('substitute').visual()<cr>", mode = "x" },
+      { "UU", "<cmd>lua require('substitute').line()<cr>", mode = "n" },
+      { "cX", "<cmd>lua require('substitute').eol()<cr>", mode = "n" },
+      {
+        "cx",
+        "<cmd>lua require('substitute.exchange').operator()<CR>",
+        mode = "n",
+        { noremap = true },
+      },
+      {
+        "cxx",
+        "<cmd>lua require('substitute.exchange').line()<CR>",
+        mode = "n",
+        { noremap = true },
+      },
+      {
+        "X",
+        "<cmd>lua require('substitute.exchange').visual()<CR>",
+        mode = "x",
+        { noremap = true },
+      },
+      {
+        "cxc",
+        "<cmd>lua require('substitute.exchange').cancel()<CR>",
+        mode = "n",
+        { noremap = true },
+      },
+    },
   },
   -- TREESITTER --
   {
@@ -74,6 +110,9 @@ return {
       -- "IndianBoy42/tree-sitter-just",
       "chrisgrieser/nvim-various-textobjs",
       "windwp/nvim-ts-autotag", -- Automatically add closing tags for HTML and JSX
+      "RRethy/nvim-treesitter-endwise",
+      "yioneko/nvim-yati",
+      "RRethy/nvim-treesitter-textsubjects",
     },
     config = function()
       require("configs.editor.treesitter")
@@ -266,7 +305,7 @@ return {
             layout_config = { height = 40 },
           })
         end,
-        desc = "Open File Browser with the path of the current buffer",
+        desc = "File Browser",
       },
       {
         "<leader>fb",
@@ -337,6 +376,32 @@ return {
         mode = { "n", "v" },
       },
     },
+  },
+  {
+    "danielfalk/smart-open.nvim",
+    branch = "0.2.x",
+    config = function()
+      require("telescope").load_extension("smart_open")
+      require("telescope").extensions.smart_open.smart_open({
+        cwd_only = true,
+        filename_first = true,
+      })
+    end,
+    dependencies = {
+      "kkharji/sqlite.lua",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    keys = {
+      {
+        "<leader>ff",
+        function()
+          require("telescope").extensions.smart_open.smart_open()
+        end,
+        desc = "Files",
+        mode = { "n" },
+      },
+    },
+    enabled = false,
   },
   {
     "stevearc/oil.nvim",
@@ -600,6 +665,23 @@ return {
     "johmsalas/text-case.nvim",
     opts = {
       default_keymappings_enabled = false,
+    },
+  },
+  {
+    "kevinhwang91/nvim-bqf",
+    ft = "qf",
+  },
+  {
+    "gabrielpoca/replacer.nvim",
+    opts = { rename_files = false },
+    keys = {
+      {
+        "<leader>rh",
+        function()
+          require("replacer").run()
+        end,
+        desc = "run replacer.nvim",
+      },
     },
   },
 }

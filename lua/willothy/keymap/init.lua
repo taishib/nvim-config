@@ -123,6 +123,9 @@ return {
           y = bind(willothy.terminal.yazi, "toggle", willothy.terminal.yazi):with_desc(
             "yazi"
           ),
+          b = bind(willothy.terminal.btm, "toggle", willothy.terminal.btm):with_desc(
+            "btm"
+          ),
           s = bind(willothy.terminal, "send_to_main"):with_desc("send"),
           o = { "<cmd>OverseerFloat<cr>", "overseer: show" },
           r = {

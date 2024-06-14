@@ -183,10 +183,15 @@ telescope.setup({
         ["js"] = "/home/willothy/projects/js/",
         ["cxx"] = "/home/willothy/projects/cxx/",
       },
+      path_display = { "filename_first" },
       prompt_title = "Find Files",
       preview_title = "Preview",
       results_title = "Files",
       temp__scrolling_limit = 100,
+    },
+    smart_open = {
+      match_algorithm = "fzf",
+      disable_devicons = false,
     },
   },
 })

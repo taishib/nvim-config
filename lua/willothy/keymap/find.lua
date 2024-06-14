@@ -41,4 +41,21 @@ wk.register({
     telescope.yank_history,
     "yank history",
   },
+  v = {
+    function()
+      local buf = vim.api.nvim_get_current_buf()
+      local dir
+      if vim.bo[buf].buftype == "" then
+        dir = vim.fs.dirname(vim.api.nvim_buf_get_name(buf))
+      else
+        dir = vim.fn.getcwd()
+      end
+      willothy.fs.browse(dir)
+    end,
+    "File Browser",
+  },
+  V = {
+    "<cmd>BrowserSwitch<cr>",
+    "Switch Browser",
+  },
 }, { mode = modes.non_editing, prefix = "<leader>f" })

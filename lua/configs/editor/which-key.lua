@@ -97,10 +97,11 @@ require("which-key").setup({
 local defaults = {
   mode = { "n", "v" },
   ["<leader><tab>"] = { name = "+tabs" },
-  ["<leader>q"] = { name = "+quit/session" },
+  ["<leader>q"] = { name = "+session" },
   ["<leader>s"] = { name = "+search" },
   ["<leader>u"] = { name = "+ui" },
   ["<leader>x"] = { name = "+diagnostics/quickfix" },
+  ["<leader>r"] = { name = "+refactor/replace" },
   ["<localleader>h"] = { name = "+hydras" },
 }
 

@@ -92,7 +92,7 @@ require("lazy").setup({
   },
   install = {
     missing = true,
-    colorscheme = { "minimus" },
+    colorscheme = { "nightfox" },
   },
   browser = "brave",
   diff = {

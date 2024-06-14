@@ -215,7 +215,7 @@ Char.setup = function(...)
     "t",
     "T",
     ";",
-    ",",
+    -- ",",
   }) do
     local desc = ""
     if key == "f" then
