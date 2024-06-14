@@ -97,7 +97,56 @@ return {
       require("configs.editor.rgflow")
     end,
     keys = {
-      { "<leader>r", "", desc = "+refactor/replace", mode = { "n", "v" } },
+      {
+        "<Leader>rG",
+        function()
+          require("rgflow").open()
+        end,
+        desc = "Rgflow open blank",
+      },
+      {
+        "<Leader>rg",
+        function()
+          require("rgflow").open_cword()
+        end,
+        desc = "Rgflow open cword",
+      },
+      {
+        "<Leader>ra",
+        function()
+          require("rgflow").open_again()
+        end,
+        desc = "Rgflow open again",
+      },
+      {
+        "<Leader>rx",
+        function()
+          require("rgflow").abort()
+        end,
+        desc = "Rgflow abort",
+      },
+      {
+        "<Leader>rC",
+        function()
+          require("rgflow").print_cmd()
+        end,
+        desc = "Rgflow print cmd",
+      },
+      {
+        "<Leader>r?",
+        function()
+          require("rgflow").print_status()
+        end,
+        desc = "Rgflow print status",
+      },
+      {
+        "<Leader>rg",
+        function()
+          require("rgflow").open_visual()
+        end,
+        mode = "x",
+        desc = "Rgflow open visual",
+      },
     },
   },
   -- {

@@ -103,6 +103,7 @@ local defaults = {
   ["<leader>x"] = { name = "+diagnostics/quickfix" },
   ["<leader>r"] = { name = "+refactor/replace" },
   ["<localleader>h"] = { name = "+hydras" },
+  ["<localleader>p"] = { name = "+pick" },
 }
 
 local wk = require("which-key")

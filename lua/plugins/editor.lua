@@ -438,9 +438,17 @@ return {
     },
   },
   {
-    "echasnovski/mini.visits",
-    config = true,
-    event = "VeryLazy",
+    "echasnovski/mini.pick",
+    dependencies = {
+      { "echasnovski/mini.extra", opts = {} },
+      { "echasnovski/mini.visits", opts = {} },
+      { "echasnovski/mini.fuzzy", opts = {} },
+    },
+    cmd = "Pick",
+    keys = { "<localleader>p" },
+    config = function()
+      require("configs.editor.mini-pick")
+    end,
   },
   -- SESSIONS / PROJECTS --
   {
