@@ -22,6 +22,7 @@ require("nvim-treesitter.configs").setup({
     "jsonc",
     "json",
     "json5",
+    "hyprlang",
   },
   sync_install = false,
   auto_install = true,
@@ -55,13 +56,16 @@ require("nvim-treesitter.configs").setup({
     },
   },
   textsubjects = {
-      enable = true,
-      prev_selection = ',', -- (Optional) keymap to select the previous selection
-      keymaps = {
-          ['<cr>'] = 'textsubjects-smart',
-          [';'] = 'textsubjects-container-outer',
-          ['i;'] = { 'textsubjects-container-inner', desc = "Select inside containers (classes, functions, etc.)" },
+    enable = true,
+    prev_selection = ",", -- (Optional) keymap to select the previous selection
+    keymaps = {
+      ["<cr>"] = "textsubjects-smart",
+      [";"] = "textsubjects-container-outer",
+      ["i;"] = {
+        "textsubjects-container-inner",
+        desc = "Select inside containers (classes, functions, etc.)",
       },
+    },
   },
   textobjects = {
     select = {

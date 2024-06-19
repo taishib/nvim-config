@@ -383,7 +383,7 @@ return {
     config = function()
       require("telescope").load_extension("smart_open")
       require("telescope").extensions.smart_open.smart_open({
-        cwd_only = true,
+        cwd_only = false,
         filename_first = true,
       })
     end,

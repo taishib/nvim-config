@@ -4,7 +4,7 @@ lint.linters_by_ft = {
   -- lua = { "selene" },
   -- proto = { "protolint" },
   markdown = { "markdownlint" },
-  zsh = { "shellcheck" },
+  -- zsh = { "shellcheck" },
   json = { "jsonlint" },
 }
 

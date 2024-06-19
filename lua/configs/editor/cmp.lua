@@ -94,14 +94,12 @@ local opts = {
     { name = "git" },
   }),
   mapping = {
-    ["<C-p>"] = cmp.mapping(
-      cmp.mapping.select_prev_item(cmp_select),
-      { "i", "c", "t" }
-    ),
-    ["<C-n>"] = cmp.mapping(
-      cmp.mapping.select_next_item(cmp_select),
-      { "i", "c", "t" }
-    ),
+    ["<C-n>"] = cmp.mapping.select_next_item({
+      behavior = cmp.SelectBehavior.Select,
+    }),
+    ["<C-p>"] = cmp.mapping.select_prev_item({
+      behavior = cmp.SelectBehavior.Select,
+    }),
     ["<CR>"] = cmp.mapping.confirm({ select = true }),
     ["<M-Up>"] = cmp.mapping(cmp.mapping.select_prev_item(cmp.select)),
     ["<M-Down>"] = cmp.mapping(cmp.mapping.select_next_item(cmp.select)),

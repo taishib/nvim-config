@@ -593,7 +593,7 @@ return {
     name = "rose-pine",
     opts = {
       styles = {
-        transparency = true,
+        transparency = false,
       },
       highlight_groups = {
         TelescopeBorder = { fg = "highlight_high", bg = "none" },
@@ -607,11 +607,15 @@ return {
     event = "VeryLazy",
   },
   {
-    'sainnhe/gruvbox-material',
+    "sainnhe/gruvbox-material",
     event = "VeryLazy",
     config = function()
       vim.g.gruvbox_material_enable_italic = true
-      vim.g.gruvbox_material_transparent_background = 2
-    end
+      -- vim.g.gruvbox_material_transparent_background = 2
+    end,
+  },
+  {
+    "xiyaowong/transparent.nvim",
+    event = "VeryLazy",
   },
 }

@@ -83,6 +83,7 @@ function M.setup()
   }
 
   vim.o.clipboard = "unnamedplus"
+  o.completeopt = "menu,menuone,noselect"
 
   -- Wezterm doesn't support OSC 52 yet :(
   --
